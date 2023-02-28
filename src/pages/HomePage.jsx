@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { MapContainer, TileLayer, useMap, Marker, Popup } from 'react-leaflet'
+import walkingData from '../data/DOC_Walking_Experiences.js'
 
 function HomePage() {
+
+  const [walkInfo, setWalkInfo] = useState(null)
+   
   return (
     <>
       <div className='main-container'>
@@ -37,6 +42,14 @@ function HomePage() {
                 <div className='card'>
                     <img className='session-image' src='/images/photo-1487956382158-bb926046304a.jpg' alt='walkingimage' />
                     <h3>Places</h3>
+                    <MapContainer center={[-36.848461, 174.763336]} zoom={12}>
+                      <TileLayer  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
+                      
+                      { walkingData.features.map(walk => (
+                        <Marker key={walk.properties.OBJECTID} position={[walk.geometry.coordinates[1],walk.geometry.coordinates[0]]} />
+                      )) }
+
+                    </MapContainer>
                 </div>
                 <div className='card'>
                     <img className='session-image' src='/images/photo-1487956382158-bb926046304a.jpg' alt='walkingimage' />
