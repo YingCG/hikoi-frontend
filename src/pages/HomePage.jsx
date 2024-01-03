@@ -46,8 +46,20 @@ function HomePage() {
                       <TileLayer  attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
                       
                       { walkingData.features.map(walk => (
-                        <Marker key={walk.properties.OBJECTID} position={[walk.geometry.coordinates[1],walk.geometry.coordinates[0]]} />
+                        <Marker key={walk.properties.OBJECTID} position={[walk.geometry.coordinates[1],walk.geometry.coordinates[0]]} 
+                        onClick={() => {
+                          console.log(walk);
+                          setWalkInfo(walk)
+                        }}
+                        />
                       )) }
+
+                      {walkInfo && (
+                        <Popup position={[walkInfo.geometry.coordinates[1], walkInfo.geometry.coordinates[0]]} onClose={() => {setWalkInfo(null)}}> 
+                         <h2>{walkInfo.properties.name}</h2>
+                         <p>{walkInfo.properties.introduction}</p>
+                        </Popup>
+                      )}
 
                     </MapContainer>
                 </div>
